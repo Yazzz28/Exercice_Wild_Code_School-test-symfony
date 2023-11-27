@@ -1,10 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <title>Wild Series</title>
-</head>
-<body>
-   <h1>Bienvenue ! {{ website }} index</h1>
-</body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Series{% endblock %}
+
+{% block body %}
+<h1> Bienvenue sur {{ website }}</h1>
+<img src="{{ asset('build/images/swaglapine_photograph_of_santa_claus_drinking_coffee_2bef25d0-fb6d-4d15-a3f5-506a43f5b224_ins.png') }}" alt=""/>
+{% endblock %}

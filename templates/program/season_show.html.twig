@@ -4,6 +4,9 @@
 {% endblock %}
 
 {% block body %}
+					<pre>
+		{{ dump(program.seasons) }}
+	</pre>
 	<div class="card" style="width: 18rem;">
 		<img src="/images/{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
 		<div class="card-body">
@@ -15,16 +18,6 @@
 			<p>Catégorie :
 				{{ program.category.name }}</p>
 			<a class="btn btn-primary" href="{{ path("program_show", { id: program.id }) }}">Voir la fiche</a>
-		</div>
-	</div>
-	<div class="example-wrapper">
-		<div class="list-group">
-			<ul>
-				{% for saison in program.seasons %}
-					<li>
-						<a href=""></a>Saison :{{ saison.number }}</li>
-				{% endfor %}
-			</ul>
 		</div>
 	</div>
 	<a href="{{ path('program_index') }}">

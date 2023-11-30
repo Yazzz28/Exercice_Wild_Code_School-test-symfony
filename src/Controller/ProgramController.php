@@ -36,4 +36,10 @@ Class ProgramController extends AbstractController
             'program' => $program,
         ]);
     }
+
+    /*#[Route('/{programId<^[0-9]+$>}/seasons/{seasonId<^[0-9]+$>}', name: 'program_season_show')]
+    public function showSeason(int $programId, int $seasonId, ProgramRepository $programRepository):Response
+    {
+ 
+    }*/
 }

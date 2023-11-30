@@ -32,7 +32,12 @@ class CategoryController extends AbstractController
         }
         
         $programes = $programRepository->findBy(['category' => $categories->getId()], ['id' => 'DESC'], 3);
-
+        if (!$programes)
+        {
+            throw $this->createNotFoundException(
+                'No program with id : found in program\'s table.'
+            );
+        }
 
         return $this->render('category/show.html.twig', [
             'programs' => $programes,

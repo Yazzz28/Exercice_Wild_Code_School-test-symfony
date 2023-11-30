@@ -30,6 +30,7 @@ class CategoryFixtures extends Fixture
         'Conte',
         'Fable',
         'Légende',
+        'Animation',
     ];
     public function load(ObjectManager $manager)
     {

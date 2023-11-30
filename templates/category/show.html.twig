@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+
 	{% for program in programs %}
 		<div class="card" style="width: 18rem;">
 			<img src="/images/{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
@@ -20,4 +21,5 @@
 	{% else %}
 		Aucune série trouvée.
 	{% endfor %}
+
 {% endblock %}

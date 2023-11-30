@@ -21,7 +21,7 @@ Class ProgramController extends AbstractController
          );
     }
 
-    #[Route('/show/{id<^[0-9]+$>}', name: 'show')]
+    #[Route('/{id<^[0-9]+$>}', name: 'show')]
     public function show(int $id, ProgramRepository $programRepository):Response
     {
         $program = $programRepository->findOneBy(['id' => $id]);

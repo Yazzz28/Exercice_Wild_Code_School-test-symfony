@@ -6,66 +6,30 @@ use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
-    const PROGRAM = [
-        'Arcane' => [
-            'category' => 'category_Animation',
-            'synopsis' => 'Film d\'animation basé sur un jeu',
-            'poster' => 'arcane.jpg'
-        ],
-        'Walking dead' => [
-            'category' => 'category_Action',
-            'synopsis' => 'Des zombies envahissent la terre',
-            'poster' => 'Walking-dead.jpg'
-        ],
-        'The Haunting Of Hill House' => [
-            'category' => 'category_Horreur',
-            'synopsis' => 'Des frères et soeurs reviennent dans la maison de leur enfance',
-            'poster' => 'The-Haunting-Of-Hill-House.webp'
-        ],
-        'American Horror Story' => [
-            'category' => 'category_Horreur',
-            'synopsis' => 'Une famille qui emménage dans une maison hantée',
-            'poster' => 'American-Horror-Story.jpg'
-        ],
-        'Love Death And Robots' => [
-            'category' => 'category_Science-fiction',
-            'synopsis' => 'Différentes histoires qui se passent dans le futur',
-            'poster' => 'love-dead-robot.jpg'
-        ],
-        'Penny Dreadful' => [
-            'category' => 'category_Fantastique',
-            'synopsis' => 'Des personnages de la littérature fantastique se retrouvent',
-            'poster' => 'Penny-dreadul.webp'
-        ],
-        'Fear The Walking Dead' => [
-            'category' => 'category_Horreur',
-            'synopsis' => 'La série se passe au tout début de l\'épidémie',
-            'poster' => 'fear-the-walking-dead.jpg'
-        ],
-        'Breaking Bad' => [
-            'category' => 'category_Thriller',
-            'synopsis' => 'Un professeur de chimie qui fabrique de la drogue',
-            'poster' => 'Breaking-Bad.jpg'
-        ],
-        'The Office' => [
-            'category' => 'category_Comédie',
-            'synopsis' => 'Les employés d\'une entreprise de vente de papier',
-            'poster' => 'the-office.jpg'
-        ],
-    ];
-    public function load(ObjectManager $manager)
+
+    public function load(ObjectManager $manager): void
     {
-        foreach (self::PROGRAM as $title => $data) {
+        //Puis ici nous demandons à la Factory de nous fournir un Faker
+        $faker = Factory::create();
+
+        /**
+        * L'objet $faker que tu récupère est l'outil qui va te permettre 
+        * de te générer toutes les données que tu souhaites
+        */
+
+        for($i = 0; $i < 50; $i++) {
             $program = new Program();
-            $program->setTitle($title);
-            $program->setSynopsis($data['synopsis']);
-            $program->setCategory($this->getReference($data['category']));
-            $program->setPoster($data['poster']);
+            //Ce Faker va nous permettre d'alimenter l'instance de Season que l'on souhaite ajouter en base
+            $program->setTitle($faker->sentence());
+            $program->setSynopsis($faker->paragraphs(3, true));
+            $program->setPoster($faker->imageUrl(640, 480));
+            $program->setCategory($this->getReference('category_' . rand(0,14)));
             $manager->persist($program);
-            $this->addReference('program_' . $title, $program);
+            $this->addReference('program_' . $i, $program);
         }
         $manager->flush();
     }

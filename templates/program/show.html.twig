@@ -20,14 +20,13 @@
 	<div class="example-wrapper">
 		<div class="list-group">
 			<ul>
-{% for saison in program.seasons %}
-    <li>
-        <a href="{{ path('program_season_show', {'programId': program.id, 'seasonId': saison.id}) }}">
-    Saison :{{ saison.number }}
-</a>
-    </li>
-{% endfor %}
-
+				{% for saison in program.seasons %}
+					<li>
+						<a href="{{ path('program_season_show', {'program': program.id, 'season': saison.id}) }}">
+							Saison :{{ saison.number }}
+						</a>
+					</li>
+				{% endfor %}
 			</ul>
 		</div>
 	</div>

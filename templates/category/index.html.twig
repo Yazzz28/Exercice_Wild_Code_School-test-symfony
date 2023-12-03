@@ -23,20 +23,7 @@
 				<a href="/category/{{categorie.name}}" class="list-group-item list-group-item-action">{{categorie.name}}</a>
 			{% endfor %}
 		</div>
-
-
-		This friendly message is coming from:
-		<ul>
-			<li>Your controller at
-				<code>
-					<a href="{{ 'C:/Users/Yacin/Bureau/CODE/WildCodeSchool/Symfony/quete_symfony/wild-series/src/Controller/CategoryController.php'|file_link(0) }}">src/Controller/CategoryController.php</a>
-				</code>
-			</li>
-			<li>Your template at
-				<code>
-					<a href="{{ 'C:/Users/Yacin/Bureau/CODE/WildCodeSchool/Symfony/quete_symfony/wild-series/templates/category/index.html.twig'|file_link(0) }}">templates/category/index.html.twig</a>
-				</code>
-			</li>
-		</ul>
-	</div>
-{% endblock %}
+		<div class="list-group">
+			<a href="/category/new" class="list-group-item list-group-item-action">nouveau</a>
+		</div>
+	{% endblock %}

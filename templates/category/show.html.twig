@@ -7,7 +7,7 @@
 
 	{% for program in programs %}
 		<div class="card" style="width: 18rem;">
-			<img src="/images/{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
+			<img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
 			<div class="card-body">
 				<h5 class="card-title">{{ loop.index }}
 					/

@@ -2,15 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Form\CategoryType;
 use App\Repository\ProgramRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CategoryRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
 {
-    #[Route('/category/', name: 'category_index')]
+    #[Route('/category/', name: 'category_')]
     public function index(CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->findAll();
@@ -19,6 +23,31 @@ class CategoryController extends AbstractController
             'category' => $category,
         ]);
     }
+
+ /**
+ * The controller for the category add form
+ * Display the form or deal with it
+ */
+#[Route('/category/new', name: 'new')]
+public function new(Request $request, EntityManagerInterface $entityManager) : Response
+{
+    $category = new Category();
+    $form = $this->createForm(CategoryType::class, $category);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted()) {
+        $entityManager->persist($category);
+        $entityManager->flush();            
+
+        // Redirect to categories list
+        return $this->redirectToRoute('category_index');
+    }
+
+    // Render the form
+    return $this->render('category/new.html.twig', [
+        'form' => $form,
+    ]);
+}
 
     #[Route('/category/{categoryName}', name: 'category_show')]
     public function show(string $categoryName, CategoryRepository $categoryRepository, ProgramRepository $programRepository): Response

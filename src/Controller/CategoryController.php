@@ -35,7 +35,7 @@ public function new(Request $request, EntityManagerInterface $entityManager) : R
     $form = $this->createForm(CategoryType::class, $category);
     $form->handleRequest($request);
 
-    if ($form->isSubmitted()) {
+    if ($form->isSubmitted() && $form->isValid()) {
         $entityManager->persist($category);
         $entityManager->flush();            
 
@@ -49,10 +49,10 @@ public function new(Request $request, EntityManagerInterface $entityManager) : R
     ]);
 }
 
-    #[Route('/category/{categoryName}', name: 'category_show')]
-    public function show(string $categoryName, CategoryRepository $categoryRepository, ProgramRepository $programRepository): Response
+    #[Route('/category/{categoryId}', name: 'category_show')]
+    public function show(string $categoryId, CategoryRepository $categoryRepository, ProgramRepository $programRepository): Response
     {
-        $categories = $categoryRepository->findOneBy(['name' => $categoryName]);
+        $categories = $categoryRepository->findOneBy(['id' => $categoryId]);
         if (!$categories)
         {
             throw $this->createNotFoundException(

@@ -6,11 +6,11 @@
 {% block body %}
 	<h1>Toutes les séries de la table program :</h1>
 	<div class="list-group">
-			<a href="/program/new" class="list-group-item list-group-item-action">nouveau</a>
-		</div>
+		<a href="/program/new" class="list-group-item list-group-item-action">nouveau</a>
+	</div>
 	{% for program in programs %}
 		<div class="card" style="width: 18rem;">
-		<img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
+			<img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
 			<div class="card-body">
 				<h5 class="card-title">{{ loop.index }}
 					/
@@ -24,7 +24,6 @@
 	{% else %}
 		Aucune série trouvée.
 	{% endfor %}
-
 	<a href="{{ path('Home_index') }}">
 		Retour à l'accueil
 	</a>

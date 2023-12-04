@@ -17,8 +17,7 @@ class SeasonType extends AbstractType
             ->add('description')
             ->add('program', null, [
                 'choice_label' => 'title',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

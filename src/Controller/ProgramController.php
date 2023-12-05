@@ -42,12 +42,13 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             $entityManager->flush();
 
-            // Redirect to categories list
+            $this->addFlash('success', 'The new program has been created');
+
             return $this->redirectToRoute('program_index');
         }
-
-        // Render the form
+     
         return $this->render('program/new.html.twig', [
+            'program' => $program,
             'form' => $form,
         ]);
     }
@@ -80,5 +81,39 @@ class ProgramController extends AbstractController
             'season' => $season,
             'episodes' => $episode,
         ]);
+    }
+
+    #[Route('/{id<^[0-9]+$>}/edit', name: 'program_edit')]
+    public function edit(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($program);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'The program has been updated');
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/{id<^[0-9]+$>}/delete', name: 'program_delete', methods: ['POST'])]
+    public function delete(Request $request, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $program->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($program);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'The program has been deleted');
+        }
+
+        return $this->redirectToRoute('program_index');
     }
 }

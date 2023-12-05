@@ -16,7 +16,9 @@ class EpisodeType extends AbstractType
             ->add('number')
             ->add('synopsis')
             ->add('season', null, [
-           'choice_label' => 'program.title'
+                'choice_label' => function ($season) {
+                    return $season->getProgram()->getTitle() . ' - Season ' . $season->getNumber();
+                },
             ]);
     }
 

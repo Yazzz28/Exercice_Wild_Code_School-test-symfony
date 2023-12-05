@@ -104,7 +104,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id<^[0-9]+$>}/delete', name: 'program_delete', methods: ['POST'])]
+    #[Route('/{id<^[0-9]+$>}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Program $program, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $program->getId(), $request->request->get('_token'))) {

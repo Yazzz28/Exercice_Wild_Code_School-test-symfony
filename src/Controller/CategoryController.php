@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
 {
-    #[Route('/category/', name: 'category_')]
+    #[Route('/category/', name: 'category_index')]
     public function index(CategoryRepository $categoryRepository): Response
     {
         $category = $categoryRepository->findAll();
@@ -38,6 +38,8 @@ public function new(Request $request, EntityManagerInterface $entityManager) : R
     if ($form->isSubmitted() && $form->isValid()) {
         $entityManager->persist($category);
         $entityManager->flush();            
+
+        $this->addFlash('success', 'The new category has been created');
 
         // Redirect to categories list
         return $this->redirectToRoute('category_index');

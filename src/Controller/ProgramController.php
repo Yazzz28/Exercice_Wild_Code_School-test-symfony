@@ -53,7 +53,6 @@ class ProgramController extends AbstractController
         ]);
     }
 
-
     #[Route('/{id<^[0-9]+$>}', name: 'show')]
     public function show(Program $program): Response
     {

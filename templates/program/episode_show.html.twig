@@ -5,12 +5,9 @@
 
 {% block body %}
 	<h1>Episode #{{ episodes.id }} serie :{{program.title}}</h1>
-
 			<img src="{{ program.poster }}" alt="Poster de la série {{ program.title }}">
 		</div>
-
 			<h2>titre de l'episode :{{ episodes.title }}</h2>
 			<p>saison :{{ season.number }}</p>
 			<p>resumer :{{ episodes.synopsis }}</p>
-
 {% endblock %}

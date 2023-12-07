@@ -2,25 +2,29 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Program;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use App\Entity\Program;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
 
+    public function __construct(private SluggerInterface $slugger)
+    {
+    }
     public function load(ObjectManager $manager): void
     {
+
+
         //Puis ici nous demandons à la Factory de nous fournir un Faker
         $faker = Factory::create();
-
         /**
         * L'objet $faker que tu récupère est l'outil qui va te permettre 
         * de te générer toutes les données que tu souhaites
         */
-
         for($i = 0; $i < 50; $i++) {
             $program = new Program();
             //Ce Faker va nous permettre d'alimenter l'instance de Season que l'on souhaite ajouter en base
@@ -29,6 +33,8 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setPoster($faker->imageUrl(640, 480));
             $program->setCategory($this->getReference('category_' . rand(0,14)));
             $program->addActor($this->getReference('actor_' . rand(0,9)));
+            $slug = $this->slugger->slug($program->getTitle());
+            $program->setSlug($slug);
             $manager->persist($program);
             $this->addReference('program_' . $i, $program);
         }

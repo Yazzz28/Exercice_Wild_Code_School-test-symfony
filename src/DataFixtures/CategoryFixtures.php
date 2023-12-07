@@ -23,7 +23,7 @@ class CategoryFixtures extends Fixture
         for($i = 0; $i < 15; $i++) {
             $category = new Category();
             //Ce Faker va nous permettre d'alimenter l'instance de Season que l'on souhaite ajouter en base
-            $category->setName($faker->sentence());
+            $category->setName($faker->title());
             $manager->persist($category);
             $this->addReference('category_' . $i, $category);
         }

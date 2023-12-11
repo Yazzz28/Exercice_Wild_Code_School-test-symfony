@@ -112,7 +112,7 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             $entityManager->flush();
 
-            $this->addFlash('success', 'The program has been updated');
+            $this->addFlash('warning', 'The program has been updated');
 
             return $this->redirectToRoute('program_index');
         }

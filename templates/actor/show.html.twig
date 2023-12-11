@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actor
+{% endblock %}
+
+{% block body %}
+	<h1>Actor : {{ actor.name }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<td>{{ actor.name }}</td>
+			</tr>
+			<tr>
+				<img src="{{ vich_uploader_asset(actor) }}" alt="{{ actor.name }}">
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<h2>Dans les séries :</h2>
+				<ul>
+					{% for program in actor.programs %}
+						<li>
+							<a href="{{ path("program_show", { slug: program.slug }) }}">{{ program.title }}</a>
+						</li>
+					{% endfor %}
+				</tr>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_actor_index') }}">back to list</a>
+
+	<a href="{{ path('app_actor_edit', {'id': actor.id}) }}">edit</a>
+
+	{{ include('actor/_delete_form.html.twig') }}
+{% endblock %}

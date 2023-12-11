@@ -5,7 +5,7 @@
 
 {% block body %}
 	<div class="card" style="width: 18rem;">
-		<img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
+		<img src="{{ vich_uploader_asset(program) }}" alt="{{ program.title }}">
 		<div class="card-body">
 			<h5 class="card-title">Titre :
 				{{ program.title }}
@@ -23,7 +23,7 @@
 			<strong>Acteurs :</strong>
 			<ul>
 				{% for actor in program.actors %}
-					<li>{{ actor.name }}</li>
+					<li><a href="{{ path("app_actor_show", { id: actor.id }) }}">{{ actor.name }}</a></li>
 				{% else %}
 					<li>Aucun acteur pour cette série</li>
 				{% endfor %}

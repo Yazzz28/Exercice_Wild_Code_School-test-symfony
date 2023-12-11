@@ -15,6 +15,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     public function __construct(private SluggerInterface $slugger)
     {
     }
+    
     public function load(ObjectManager $manager): void
     {
 

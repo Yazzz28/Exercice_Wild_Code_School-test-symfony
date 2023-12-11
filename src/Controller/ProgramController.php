@@ -6,14 +6,16 @@ use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Form\ProgramType;
+use Symfony\Component\Mime\Email;
 use App\Repository\ProgramRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 #[Route('/program', name: 'program_')]
 class ProgramController extends AbstractController
@@ -34,7 +36,7 @@ class ProgramController extends AbstractController
      * Display the form or deal with it
      */
     #[Route('/new', name: 'new')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function new(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -47,6 +49,14 @@ class ProgramController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'The new program has been created');
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to('yacinemennaa@hotmail.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('Program/newProgramEmail.html.twig', ['program' => $program]));
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('program_index');
         }
@@ -81,8 +91,7 @@ class ProgramController extends AbstractController
         #[MapEntity(mapping: ['programslug' => 'slug'])] Program $program,
         #[MapEntity(mapping: ['seasonid' => 'id'])] Season $season,
         #[MapEntity(mapping: ['episodeslug' => 'slug'])] Episode $episode
-): Response
-    {
+    ): Response {
 
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,

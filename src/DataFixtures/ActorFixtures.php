@@ -6,8 +6,12 @@ use Faker\Factory;
 use App\Entity\Actor;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class ActorFixtures extends Fixture
+/**
+ * @Depends({"ProgramFixtures"})
+ */
+class ActorFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -22,12 +26,18 @@ class ActorFixtures extends Fixture
             $actor = new Actor();
             //Ce Faker va nous permettre d'alimenter l'instance de Season que l'on souhaite ajouter en base
             $actor->setName($faker->name());
+            $actor->setAvatar($faker->imageUrl(640, 480));
             $manager->persist($actor);
             $this->addReference('actor_' . $i, $actor);
-            for ($j = 0; $j < 3; $j++) {
-                $actor->addProgram($this->getReference('Program_' . rand(0, 2)));
-            }
+            $actor->addProgram($this->getReference('program_' . rand(0, 2)));
         }
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            ProgramFixtures::class,
+        ];
     }
 }

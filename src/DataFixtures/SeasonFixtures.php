@@ -10,6 +10,10 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 //Tout d'abord nous ajoutons la classe Factory de FakerPhp
 use Faker\Factory;
 
+/**
+ * @Depends({"ProgramFixtures"})
+ */
+
 class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void

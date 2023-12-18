@@ -9,6 +9,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
+/**
+ * @Depends({"CategoryFixtures"})
+ */
+
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
 
@@ -18,8 +22,6 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-
-
         //Puis ici nous demandons à la Factory de nous fournir un Faker
         $faker = Factory::create();
         /**

@@ -9,6 +9,10 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
+/**
+ * @Depends({"SeasonFixtures"})
+ */
+
 class EpisodeFixtures extends Fixture implements DependentFixtureInterface
 {
 
@@ -44,8 +48,6 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             SeasonFixtures::class,
-            ProgramFixtures::class,
-            CategoryFixtures::class,
         ];
     }
 }
